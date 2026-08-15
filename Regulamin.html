@@ -1,0 +1,851 @@
+<!doctype html>
+<html lang="pl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>🥀Cwele RP🥀</title>
+
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        min-height: 100vh;
+        font-family: "Inter", "Segoe UI", Arial, sans-serif;
+        color: #e8e8ee;
+        background:
+          radial-gradient(
+            circle at 15% 20%,
+            rgba(27, 151, 16, 0.16),
+            transparent 32%
+          ),
+          radial-gradient(
+            circle at 85% 15%,
+            rgba(46, 180, 28, 0.12),
+            transparent 30%
+          ),
+          radial-gradient(
+            circle at 70% 85%,
+            rgba(26, 218, 1, 0.911),
+            transparent 35%
+          ),
+          linear-gradient(135deg, #022502 0%, #021305 45%, #051a02 100%);
+        overflow-x: hidden;
+      }
+
+      /* Warstwa dekoracyjna */
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        opacity: 0.35;
+        background-image:
+          linear-gradient(rgba(255, 255, 255, 0.018) 1px, transparent 1px),
+          linear-gradient(
+            90deg,
+            rgba(255, 255, 255, 0.018) 1px,
+            transparent 1px
+          );
+        background-size: 45px 45px;
+        mask-image: linear-gradient(to bottom, black, transparent);
+      }
+
+      /* Rozmyte światła */
+      .glow {
+        position: fixed;
+        width: 450px;
+        height: 450px;
+        border-radius: 50%;
+        filter: blur(100px);
+        pointer-events: none;
+        opacity: 0.14;
+      }
+
+      .glow.one {
+        background: #7048ff;
+        top: -180px;
+        left: -150px;
+      }
+
+      .glow.two {
+        background: #008cff;
+        right: -180px;
+        top: 30%;
+      }
+
+      .glow.three {
+        background: #a33cff;
+        left: 20%;
+        bottom: -250px;
+      }
+
+      .page {
+        position: relative;
+        z-index: 1;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        padding: 60px 20px;
+      }
+
+      .regulamin {
+        width: min(1100px, 100%);
+        background: rgba(15, 16, 24, 0.82);
+        border: 1px solid rgba(255, 255, 255, 0.09);
+        border-radius: 24px;
+        padding: 55px 60px;
+        box-shadow:
+          0 30px 100px rgba(0, 0, 0, 0.55),
+          0 0 80px rgba(95, 70, 255, 0.07),
+          inset 0 1px 0 rgba(255, 255, 255, 0.04);
+        backdrop-filter: blur(22px);
+        -webkit-backdrop-filter: blur(22px);
+      }
+
+      /* Nagłówek */
+      .header {
+        text-align: center;
+        margin-bottom: 55px;
+        padding-bottom: 35px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      }
+
+      .header .badge {
+        display: inline-block;
+        padding: 7px 14px;
+        margin-bottom: 18px;
+        border-radius: 999px;
+        background: rgba(110, 75, 255, 0.12);
+        border: 1px solid rgba(130, 105, 255, 0.25);
+        color: #a99aff;
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 1.8px;
+        text-transform: uppercase;
+      }
+
+      .header h1 {
+        font-size: clamp(32px, 5vw, 52px);
+        line-height: 1.1;
+        font-weight: 800;
+        letter-spacing: -1.5px;
+        background: linear-gradient(90deg, #ffffff, #c7c4ff, #ffffff);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+      }
+
+      .header p {
+        margin-top: 14px;
+        color: #858796;
+        font-size: 14px;
+      }
+
+      /* Sekcje */
+      .section {
+        margin-bottom: 42px;
+      }
+
+      .section:last-of-type {
+        margin-bottom: 0;
+      }
+
+      .section-title {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        margin-bottom: 22px;
+        padding-bottom: 12px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+      }
+
+      .section-number {
+        min-width: 40px;
+        height: 40px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 11px;
+        background: linear-gradient(
+          135deg,
+          rgba(112, 72, 255, 0.25),
+          rgba(0, 145, 255, 0.12)
+        );
+        border: 1px solid rgba(130, 110, 255, 0.25);
+        color: #b4aaff;
+        font-size: 14px;
+        font-weight: 800;
+      }
+
+      .section-title h2 {
+        font-size: 22px;
+        color: #f2f2f5;
+        font-weight: 750;
+      }
+
+      .rule {
+        display: grid;
+        grid-template-columns: 55px 1fr;
+        gap: 12px;
+        padding: 10px 12px;
+        margin: 2px 0;
+        border-radius: 10px;
+        transition:
+          background 0.2s ease,
+          transform 0.2s ease;
+      }
+
+      .rule:hover {
+        background: rgba(255, 255, 255, 0.025);
+      }
+
+      .rule-number {
+        color: #9c8cff;
+        font-weight: 700;
+        font-size: 14px;
+        padding-top: 1px;
+      }
+
+      .rule-text {
+        color: #c5c6ce;
+        font-size: 15px;
+        line-height: 1.75;
+      }
+
+      .rule-text strong {
+        color: #eeeef3;
+        font-weight: 700;
+      }
+
+      /* Kary */
+      .penalties {
+        margin-top: 15px;
+        padding: 18px;
+        border-radius: 14px;
+        background: rgba(255, 255, 255, 0.025);
+        border: 1px solid rgba(255, 255, 255, 0.06);
+      }
+
+      .penalty {
+        padding: 8px 0;
+        color: #c8c9d1;
+        line-height: 1.6;
+      }
+
+      .penalty strong {
+        color: #b0a4ff;
+      }
+
+      .penalty a {
+        color: #a99aff;
+        text-decoration: none;
+        font-weight: 700;
+        padding: 2px 5px;
+        border-radius: 5px;
+        transition: all 0.2s ease;
+      }
+
+      .penalty a:hover {
+        color: #ffffff;
+        background: rgba(120, 90, 255, 0.2);
+        text-decoration: underline;
+      }
+
+      /* Słownik */
+      .dictionary {
+        display: grid;
+        gap: 5px;
+      }
+
+      .term {
+        padding: 13px 15px;
+        border-radius: 10px;
+        transition: background 0.2s ease;
+      }
+
+      .term:hover {
+        background: rgba(255, 255, 255, 0.025);
+      }
+
+      .term-name {
+        display: inline-block;
+        min-width: 55px;
+        margin-right: 8px;
+        color: #a99aff;
+        font-weight: 800;
+      }
+
+      .term-description {
+        color: #c4c5cd;
+        font-size: 14px;
+        line-height: 1.7;
+      }
+
+      /* Stopka */
+      .footer {
+        margin-top: 50px;
+        padding-top: 28px;
+        border-top: 1px solid rgba(255, 255, 255, 0.08);
+        text-align: center;
+      }
+
+      .footer p {
+        color: #737582;
+        font-size: 13px;
+        line-height: 1.7;
+      }
+
+      .footer .author {
+        margin-top: 12px;
+        color: #9d96c9;
+        font-weight: 600;
+      }
+
+      /* Responsywność */
+      @media (max-width: 700px) {
+        .page {
+          padding: 20px 10px;
+        }
+
+        .regulamin {
+          padding: 35px 20px;
+          border-radius: 18px;
+        }
+
+        .header {
+          margin-bottom: 35px;
+        }
+
+        .section {
+          margin-bottom: 32px;
+        }
+
+        .section-title h2 {
+          font-size: 19px;
+        }
+
+        .rule {
+          grid-template-columns: 48px 1fr;
+          gap: 5px;
+          padding: 9px 5px;
+        }
+
+        .rule-text {
+          font-size: 14px;
+          line-height: 1.65;
+        }
+
+        .term {
+          padding: 10px 5px;
+        }
+
+        .term-name {
+          display: block;
+          margin-bottom: 3px;
+        }
+      }
+
+      /* Pasek przewijania */
+      ::-webkit-scrollbar {
+        width: 9px;
+      }
+
+      ::-webkit-scrollbar-track {
+        background: #08090d;
+      }
+
+      ::-webkit-scrollbar-thumb {
+        background: #292538;
+        border-radius: 10px;
+      }
+
+      ::-webkit-scrollbar-thumb:hover {
+        background: #443b67;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="glow one"></div>
+    <div class="glow two"></div>
+    <div class="glow three"></div>
+
+    <main class="page">
+      <article class="regulamin">
+        <header class="header">
+          <div class="badge">FiveM • RolePlay</div>
+          <h1>Regulamin Serwera</h1>
+          <p>
+            Przed rozpoczęciem rozgrywki zapoznaj się z poniższymi zasadami.
+          </p>
+        </header>
+
+        <!-- 1 -->
+        <section class="section">
+          <div class="section-title">
+            <div class="section-number">01</div>
+            <h2>Zasady ogólne</h2>
+          </div>
+
+          <div class="rule">
+            <div class="rule-number">1.1</div>
+            <div class="rule-text">
+              Podczas rozgrywki gracz ma obowiązek aktywnie angażować się w
+              odgrywany scenariusz. Brak podstawowych umiejętności RolePlay
+              będzie skutkować tymczasową blokadą.
+            </div>
+          </div>
+
+          <div class="rule">
+            <div class="rule-number">1.2</div>
+            <div class="rule-text">
+              Zabronione jest nękanie, wyśmiewanie lub piętnowanie innych graczy
+              ze względu na sposób prowadzenia ich postaci. Administracja
+              zastrzega sobie prawo do indywidualnej oceny toksycznych zachowań.
+            </div>
+          </div>
+
+          <div class="rule">
+            <div class="rule-number">1.3</div>
+            <div class="rule-text">
+              Serwer nie odpowiada za przejawy nienawiści wykraczające poza GTA,
+              wszelkie sprawy zalecamy kierować do odpowiednich służb.
+            </div>
+          </div>
+        </section>
+
+        <!-- 2 -->
+        <section class="section">
+          <div class="section-title">
+            <div class="section-number">02</div>
+            <h2>Rozgrywka i obostrzenia</h2>
+          </div>
+
+          <div class="rule" id="2.1">
+            <div class="rule-number">2.1</div>
+            <div class="rule-text">
+              Rabowanie graczy bez uzasadnionego podłoża fabularnego lub bez
+              odpowiedniego odegrania akcji dla drugiej strony jest zabronione.
+            </div>
+          </div>
+
+          <div class="rule" id="2.2">
+            <div class="rule-number">2.2</div>
+            <div class="rule-text">
+              Zbliżający się restart serwera nie może wywoływać żadnych zmian w
+              rozgrywce ani zachowaniu postaci.
+            </div>
+          </div>
+
+          <div class="rule" id="2.3">
+            <div class="rule-number">2.3</div>
+            <div class="rule-text">
+              Zabrania się odbierania przedmiotów należących do funkcjonariuszy
+              frakcji, wyjątkiem jest odebranie przedmiotu, aby dokończyć już
+              trwający scenariusz.
+            </div>
+          </div>
+        </section>
+
+        <!-- 3 -->
+        <section class="section">
+          <div class="section-title">
+            <div class="section-number">03</div>
+            <h2>Nadużycia i Fail RP</h2>
+          </div>
+
+          <div class="rule">
+            <div class="rule-number">3.1</div>
+            <div class="rule-text">
+              Zabronione jest nadużywanie mechanik zarobkowych (grindowanie) bez
+              elementów roleplay (np. skracanie tras prac w legalnych w celach
+              czysto zarobkowych).
+            </div>
+          </div>
+
+          <div class="rule" id="3.2">
+            <div class="rule-number">3.2</div>
+            <div class="rule-text">
+              Zakazuje się podawania jakichkolwiek informacji (np. pozycji
+              wrogów) w stanie BW. Gracz powinien skupić się wyłącznie na
+              odgrywaniu bólu.
+            </div>
+          </div>
+
+          <div class="rule" id="3.3">
+            <div class="rule-number">3.3</div>
+            <div class="rule-text">
+              Zakazuje się wielokrotnego używania komendy
+              <strong>/try</strong> podczas jednej akcji roleplay, w celu
+              uzyskania przewagi w danej sytuacji.
+            </div>
+          </div>
+
+          <div class="rule" id="3.4">
+            <div class="rule-number">3.4</div>
+            <div class="rule-text">
+              Zakaz nadużywania skryptów i oprogramowania do omijania mechanizmu
+              anty-AFK.
+            </div>
+          </div>
+        </section>
+
+        <!-- 4 -->
+        <section class="section">
+          <div class="section-title">
+            <div class="section-number">04</div>
+            <h2>Poszanowanie życia</h2>
+          </div>
+
+          <div class="rule" id="4.1">
+            <div class="rule-number">4.1</div>
+            <div class="rule-text">
+              Brak poszanowania życia (NZ / Fear RP): Gracz ma obowiązek
+              odgrywać strach przed bezpośrednim zagrożeniem życia (np.
+              wycelowana broń). Brak reakcji na groźbę użycia broni i próba
+              walki w beznadziejnej sytuacji są zabronione.
+            </div>
+          </div>
+
+          <div class="rule">
+            <div class="rule-number">4.2</div>
+            <div class="rule-text">
+              Zabronione jest prowokowanie gangów, policji lub innych
+              uzbrojonych grup bez wyraźnego powodu fabularnego.
+            </div>
+          </div>
+
+          <div class="rule" id="4.3">
+            <div class="rule-number">4.3</div>
+            <div class="rule-text">
+              Zakazuje się organizowania pozbawionych głębszego kontekstu
+              strzelanin w rejonie wszelkich placówek państwowych i budynków
+              użyteczności publicznej (szpitale, komendy, siedziby rządu).
+              Konflikty zbrojne w tych strefach są dopuszczalne wyłącznie w
+              sytuacjach, gdy mają wyraźne podłoże fabularne i stanowią logiczne
+              następstwo naturalnie toczącej się akcji RolePlay.
+            </div>
+          </div>
+        </section>
+
+        <!-- 5 -->
+        <section class="section">
+          <div class="section-title">
+            <div class="section-number">05</div>
+            <h2>Odgrywanie strachu i bólu</h2>
+          </div>
+
+          <div class="rule">
+            <div class="rule-number">5.1</div>
+            <div class="rule-text">
+              Gracz, którego postaci grozi śmierć lub trwały uszczerbek na
+              zdrowiu, ma obowiązek odgrywać strach głosem oraz zachowaniem
+              postaci.
+            </div>
+          </div>
+
+          <div class="rule">
+            <div class="rule-number">5.2</div>
+            <div class="rule-text">
+              Odgrywanie konsekwencji prawnych: Jeśli postać regularnie popełnia
+              najcięższe przestępstwa, musi liczyć się z konsekwencjami.
+              Popełnienie 3 przestępstw podlegających pod terroryzm w ciągu
+              miesiąca skutkuje rozprawą sądową o karę śmierci. Rozprawa o karę
+              śmierci jest traktowana jako oficjalny proces FCK i wymaga
+              wcześniejszego zatwierdzenia przez administrację serwera.
+            </div>
+          </div>
+
+          <div class="rule">
+            <div class="rule-number">5.3</div>
+            <div class="rule-text">
+              Odgrywanie bólu: Gracz, którego postać uległa wypadkowi,
+              postrzałowi lub odniosła inne obrażenia, ma obowiązek odgrywać ból
+              głosowo oraz poprzez animacje postaci, także przez pewien czas po
+              zdarzeniu.
+            </div>
+          </div>
+        </section>
+
+        <!-- 6 -->
+        <section class="section">
+          <div class="section-title">
+            <div class="section-number">06</div>
+            <h2>Kultura gry i atmosfera</h2>
+          </div>
+
+          <div class="rule">
+            <div class="rule-number">6.1</div>
+            <div class="rule-text">
+              Szanujmy się nawzajem. Nie oczekujemy świętości, ale unikaj
+              zachowań, które skutecznie zniechęcają innych do gry na serwerze.
+            </div>
+          </div>
+
+          <div class="rule">
+            <div class="rule-number">6.2</div>
+            <div class="rule-text">
+              Jeśli masz z kimś problem prywatny - załatw go poza serwerem. W
+              grze skupiamy się na kreowaniu akcji, a nie na wylewaniu swoich
+              żali czy uprzykrzaniu życia innym.
+            </div>
+          </div>
+
+          <div class="rule">
+            <div class="rule-number">6.3</div>
+            <div class="rule-text">
+              Nadmierna toksyczność i próby psucia klimatu gry innym uczestnikom
+              będą traktowane jako naruszenie regulaminu. Grajmy fair, żeby
+              każdy miał ochotę wracać na serwer.
+            </div>
+          </div>
+        </section>
+
+        <!-- 7 -->
+        <section class="section">
+          <div class="section-title">
+            <div class="section-number">07</div>
+            <h2>RDM i VDM</h2>
+          </div>
+
+          <div class="rule" id="7.1">
+            <div class="rule-number">7.1</div>
+            <div class="rule-text">
+              RDM (Random Death Match) - zabronione jest atakowanie graczy bez
+              właściwej inicjacji. Słowa takie jak „ej” czy „halo” nie stanowią
+              poprawnej inicjacji; musi ona zawierać logiczny powód i kontekst
+              fabularny.
+            </div>
+          </div>
+
+          <div class="rule" id="7.2">
+            <div class="rule-number">7.2</div>
+            <div class="rule-text">
+              VDM (Vehicle Death Match) - zabronione jest taranowanie i
+              rozjeżdżanie graczy pojazdami, a także używanie pojazdu do ataku.
+            </div>
+          </div>
+
+          <div class="rule" id="7.3">
+            <div class="rule-number">7.3</div>
+            <div class="rule-text">
+              Zakaz Combat Logu (CL) - wychodzenie z gry lub rozłączanie się
+              podczas aktywnej akcji RP w celu uniknięcia konsekwencji jest
+              zabronione. Brak potwierdzenia błędu technicznego na kanale crash
+              skutkuje karą „clear eq”, a w przypadku trzykrotnego powtórzenia -
+              „wipe” całej postaci.
+            </div>
+          </div>
+        </section>
+
+        <!-- 8 -->
+        <section class="section">
+          <div class="section-title">
+            <div class="section-number">08</div>
+            <h2>Konsekwencje serwerowe</h2>
+          </div>
+
+          <div class="rule">
+            <div class="rule-number">8.1</div>
+            <div class="rule-text">
+              Za nieprzestrzeganie regulaminu będą wyciągane kary finansowe na
+              serwerze (pieniądze IC) według taryfikatora:
+            </div>
+          </div>
+
+          <div class="penalties">
+            <div class="penalty">
+              <strong>1. 1000$</strong>- Punkty <a href="#2.1">2.1</a>,
+              <a href="#2.3">2.3</a>, <a href="#3.2">3.2</a>,
+              <a href="#3.3">3.3</a>, <a href="#4.1">4.1</a>,
+              <a href="#4.3">4.3</a>
+            </div>
+
+            <div class="penalty">
+              <strong>2. 10,000$</strong> - Punkty <a href="#7.1">7.1</a>,
+              <a href="#7.2">7.2</a>,
+              <a href="#7.3">7.3</a>
+            </div>
+
+            <div class="penalty">
+              <strong><a href="#3.4">3. 3.4</a></strong> - zabranie wszystkich
+              wyAFKowanych pieniędzy
+            </div>
+          </div>
+        </section>
+
+        <!-- 9 -->
+        <section class="section">
+          <div class="section-title">
+            <div class="section-number">09</div>
+            <h2>Słownik pojęć RolePlay</h2>
+          </div>
+
+          <div class="dictionary">
+            <div class="term">
+              <span class="term-name">9.1 IC</span>
+              <span class="term-description">
+                (In Character) — wszystko co dotyczy bezpośrednio świata gry i
+                odgrywanej postaci.
+              </span>
+            </div>
+
+            <div class="term">
+              <span class="term-name">9.2 OOC</span>
+              <span class="term-description">
+                (Out of Character) — wszystko co jest poza światem gry (np.
+                sprawy prywatne, regulamin serwera).
+              </span>
+            </div>
+
+            <div class="term">
+              <span class="term-name">9.3 MG</span>
+              <span class="term-description">
+                (MetaGaming) — wykorzystywanie wiedzy pozyskanej poza grą (OOC)
+                w rozgrywce IC (np. czytanie czatu streama, Discorda).
+              </span>
+            </div>
+
+            <div class="term">
+              <span class="term-name">9.4 PG</span>
+              <span class="term-description">
+                (PowerGaming) — wymuszanie na innym graczu akcji narracyjnej
+                (/me, /do) bez dania mu szansy na reakcję.
+              </span>
+            </div>
+
+            <div class="term">
+              <span class="term-name">9.5 CK</span>
+              <span class="term-description">
+                (Character Kill) — trwałe uśmiercenie swojej postaci (zgon
+                odgrywany wspólnie z lekarzem).
+              </span>
+            </div>
+
+            <div class="term">
+              <span class="term-name">9.6 FCK</span>
+              <span class="term-description">
+                (Force Character Kill) — trwałe uśmiercenie postaci innego
+                gracza po uzyskaniu zgody lub zatwierdzeniu wniosku przez
+                administrację.
+              </span>
+            </div>
+
+            <div class="term">
+              <span class="term-name">9.7 BW</span>
+              <span class="term-description">
+                (Brutally Wounded) — stan nieprzytomności postaci w wyniku
+                ciężkich obrażeń. Nadmierne odgrywanie nieprzytomnego w celu
+                unikania interakcji (np. porwania) jest traktowane jako unikanie
+                akcji.
+              </span>
+            </div>
+
+            <div class="term">
+              <span class="term-name">9.8 RK</span>
+              <span class="term-description">
+                (Revenge Kill) — zabroniony odwet polegający na natychmiastowym
+                powrocie na miejsce strzelaniny po ożywieniu w celu wbijania BW
+                przeciwnikowi.
+              </span>
+            </div>
+
+            <div class="term">
+              <span class="term-name">9.9 RDM</span>
+              <span class="term-description">
+                (Random Death Match) — bezpodstawne strzelanie lub atakowanie
+                innych graczy bez jakiejkolwiek inicjacji i wątku RP.
+              </span>
+            </div>
+
+            <div class="term">
+              <span class="term-name">9.10 VDM</span>
+              <span class="term-description">
+                (Vehicle Death Match) — rozjeżdżanie i atakowanie innych graczy
+                przy użyciu pojazdu mechanicznego.
+              </span>
+            </div>
+
+            <div class="term">
+              <span class="term-name">9.11 CN</span>
+              <span class="term-description">
+                (Celebrity Name) — zakazane używanie imion i nazwisk postaci
+                powszechnie znanych (np. polityków, celebrytów).
+              </span>
+            </div>
+
+            <div class="term">
+              <span class="term-name">9.12 BU / WMG</span>
+              <span class="term-description">
+                (Bug Using / Wykorzystanie Mechaniki) — nadużywanie mechanik gry
+                lub błędów skryptów w celu uzyskania nienaturalnej przewagi.
+              </span>
+            </div>
+
+            <div class="term">
+              <span class="term-name">9.13 CB</span>
+              <span class="term-description">
+                (Cop Baiting) — celowe prowokowanie policji do pościgu lub
+                interakcji bez immersyjnego powodu.
+              </span>
+            </div>
+
+            <div class="term">
+              <span class="term-name">9.14 CL</span>
+              <span class="term-description">
+                (Combat Log) — wyjście z gry podczas akcji RP, w tym „crashe”. W
+                przypadku błędu technicznego gracz musi w ciągu 5 minut
+                powiadomić administrację na odpowiednim kanale.
+              </span>
+            </div>
+
+            <div class="term">
+              <span class="term-name">9.15 NZ</span>
+              <span class="term-description">
+                (Nieposzanowanie Życia) — brak poszanowania życia postaci w
+                sytuacji bezpośredniego zagrożenia bronią lub upadkiem z
+                wysokości.
+              </span>
+            </div>
+
+            <div class="term">
+              <span class="term-name">9.16 FD</span>
+              <span class="term-description">
+                (Fail Driving) — jazda pojazdem w sposób skrajnie
+                nierealistyczny, ignorujący fizykę gry oraz możliwości
+                techniczne pojazdu (np. jazda autem sportowym po bezdrożach i
+                stromych zboczach górskich, czy kontynuowanie szybkiej jazdy po
+                zderzeniu czołowym).
+              </span>
+            </div>
+
+            <div class="term">
+              <span class="term-name">9.17 FailRP</span>
+              <span class="term-description">
+                ogólne określenie na zachowania łamiące podstawowe zasady
+                immersji i odgrywania ról.
+              </span>
+            </div>
+          </div>
+        </section>
+
+        <footer class="footer">
+          <p>
+            Twórca regulaminu zastrzega sobie prawo do wprowadzania zmian za
+            zgodą administratora serwera FiveM lub na samą prośbę Administracji.
+          </p>
+
+          <p class="author">Mateusz.G ©</p>
+        </footer>
+      </article>
+    </main>
+  </body>
+</html>
